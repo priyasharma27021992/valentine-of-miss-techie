@@ -1,49 +1,49 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import socksGreenImage from './assets/images/socks_green.jpeg';
+import socksBlueImage from './assets/images/socks_blue.jpeg';
 
-const name = ref('Priya');
-const href = ref('https://scrimba.com/');
-const disabled = ref(true);
-const coding_years = ref(0);
-const username = ref('priyasharma');
+const product = ref('Socks');
+const description = ref('Description');
+const image = ref(socksGreenImage);
+const inventory = ref(0);
+const variants = ref([
+	{ id: 2234, color: 'green', image: socksGreenImage },
+	{ id: 2235, color: 'blue', image: socksBlueImage },
+]);
 
-const getFormattedDate = (date: Date) => {
-	const options = { year: 'numeric', month: 'long', day: 'numeric' };
-	return date.toLocaleDateString('en-UK', options);
-};
+const cart = ref(0);
+const addToCart = () => (cart.value += 1);
+
+const updateImage = (variantImage: string) => (image.value = variantImage);
 </script>
 
 <template>
 	<main>
-		<h1>
-			Hi, my name is
-			<a
-				:href="href + '@' + username"
-				target="_blank">
-				{{ name }}
-			</a>
-		</h1>
-		<a
-			target="_blank"
-			:href>
-			<button :disabled>
-				Click to visit my favourite website! If you can...
-			</button>
-		</a>
-		<h2>
-			{{
-				coding_years > 0
-					? `I have been coding for ${coding_years} years`
-					: "I'm a newbie"
-			}}
-		</h2>
-		<h3>Today is {{ getFormattedDate(new Date()) }}</h3>
+		<div class="cart">Cart: {{ cart }}</div>
+		<div class="product-display">
+			<div class="product-container">
+				<div class="product-image">
+					<img :src="image" />
+				</div>
+				<div class="product-info">
+					<h1>{{ product }}</h1>
+					<p v-if="inventory > 10">In Stock</p>
+					<p v-else-if="inventory > 0 && inventory <= 10">Almost sold out</p>
+					<p v-else>Out of Stock</p>
+					<ul>
+						<li
+							v-for="variant in variants"
+							:key="variant.id"
+							@mouseover="updateImage(variant.image)">
+							{{ variant.color }}
+						</li>
+					</ul>
+					<button @click="addToCart">Add To Cart</button>
+				</div>
+			</div>
+		</div>
 	</main>
 </template>
 
-<style scoped>
-h1 {
-	text-align: center;
-	font-weight: bold;
-}
-</style>
+<style scoped></style>
