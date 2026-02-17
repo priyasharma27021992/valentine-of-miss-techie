@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import Habit from './components/Habit.vue';
 const habits = ref([{ id: 1, name: 'Study', done: false }]);
 
 const markHabitDone = (id: number) => {
@@ -11,22 +12,21 @@ const markHabitDone = (id: number) => {
 </script>
 
 <template>
-	<main>
+	<main
+		style="
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		">
 		<h1>Habits</h1>
-		<ul>
-			<li
+		<ol>
+			<Habit
 				v-for="habit in habits"
-				:key="habit.id">
-				<div v-if="habit.done">Done</div>
-				<div v-else>Not Done</div>
-				<div>{{ habit.name }}</div>
-				<button
-					:disabled="habit.done"
-					@click="markHabitDone(habit.id)">
-					Mark as Done
-				</button>
-			</li>
-		</ul>
+				:key="habit.id"
+				:habit="habit"
+				@markHabitDone="markHabitDone(habit.id)" />
+		</ol>
 	</main>
 </template>
 
