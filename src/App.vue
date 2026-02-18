@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Habit from './components/Habit.vue';
-const habits = ref([{ id: 1, name: 'Study', done: false }]);
+const habits = ref([]);
+const text = ref("");
 
-const markHabitDone = (id: number) => {
+const toggleDone = (id: number) => {
 	habits.value = habits.value.map((ele) => {
-		if (ele.id === id) return { ...ele, done: true };
+		console.log('hello toggleDone', ele);
+		if (ele.id === id) return { ...ele, done: !ele.done };
 		return ele;
 	});
 };
+
+const addHabit = () => {
+	habits.value.push({id: habits.value.length+1, name: text.value, done: false});
+	text.value = "";
+}
 </script>
 
 <template>
@@ -21,11 +28,15 @@ const markHabitDone = (id: number) => {
 		">
 		<h1>Habits</h1>
 		<ol>
+			<div style="display: flex; flex-direction: row; gap: 8px;">
+				<input v-model="text" placeholder="Add Habit" style="padding: 8px; border-radius: 8px;"/>
+				<button @click="addHabit">Add Habit</button>
+			</div>
 			<Habit
 				v-for="habit in habits"
 				:key="habit.id"
 				:habit="habit"
-				@markHabitDone="markHabitDone(habit.id)" />
+				@toggleDone="toggleDone(habit.id)" />
 		</ol>
 	</main>
 </template>

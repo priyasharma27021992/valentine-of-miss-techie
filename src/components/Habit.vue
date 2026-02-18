@@ -1,6 +1,15 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 defineProps(['habit']);
-defineEmits(['markHabitDone']);
+const emit = defineEmits(['toggleDone']);
+
+const count = ref(0);
+
+const handleClick = () => {
+	emit('toggleDone');
+	count.value++;
+}
 </script>
 
 <template>
@@ -18,9 +27,12 @@ defineEmits(['markHabitDone']);
 			Not Done
 		</div>
 		<button
-			:disabled="habit.done"
-			@click="$emit('markHabitDone')">
-			Mark as Done
+			@click="handleClick"
+			:class="{ 'btn-disabled': habit.done }"
+		>
+			<span v-if="habit.done">Mark as Un Done</span>
+			<span v-else>Mark as Done</span>
 		</button>
+		<p>Button clicked: {{ count }} times</p>
 	</li>
 </template>
