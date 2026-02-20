@@ -1,0 +1,10 @@
+[
+	{
+		"component": "hero",
+		"title": "Welcome",
+		"subtitle": "Hello",
+		"imgUrl": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d"
+	},
+	{ "component": "textBlock", "text": "Some content" },
+	{ "component": "cta", "label": "Click Me" }
+]
