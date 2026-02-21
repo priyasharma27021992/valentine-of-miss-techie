@@ -6,9 +6,10 @@ const axiosClient = axios.create({
 });
 
 export async function getRandomImage() {
+	console.log('baby', import.meta.env.VITE_CLIENT_ACCESS_KEY);
 	try {
 		const response = await axiosClient({
-			url: `/photos/random?client_id=${import.meta.env.CLIENT_ACCESS_KEY}`,
+			url: `/photos/random?client_id=${import.meta.env.VITE_CLIENT_ACCESS_KEY}`,
 			method: 'get',
 		});
 		console.log('response', response);
